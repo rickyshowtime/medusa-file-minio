@@ -45,7 +45,7 @@ class MinioService extends AbstractFileService {
     const params = {
       ACL: options.isProtected ? "private" : "public-read",
       Bucket: options.isProtected ? this.private_bucket_ : this.bucket_,
-      Body: fs.createReadStream(this.folder_ ? `${this.folder_}${file.path}` : file.path),
+      Body: fs.createReadStream(this.folder_ ? `${this.folder_}/${file.path}` : file.path),
       Key: fileKey,
     }
 
