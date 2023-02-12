@@ -18,6 +18,7 @@ class MinioService extends AbstractFileService {
     this.private_secret_access_key_ =
       options.private_secret_access_key ?? this.secretAccessKey_
     this.endpoint_ = options.endpoint
+    this.folder_ = options.folder
     this.s3ForcePathStyle_ = true
     this.signatureVersion_ = "v4"
     this.downloadUrlDuration = options.download_url_duration ?? 60 // 60 seconds
@@ -44,7 +45,7 @@ class MinioService extends AbstractFileService {
     const params = {
       ACL: options.isProtected ? "private" : "public-read",
       Bucket: options.isProtected ? this.private_bucket_ : this.bucket_,
-      Body: fs.createReadStream(file.path),
+      Body: fs.createReadStream(this.folder_ ? `${this.folder_}${file.path}` : file.path),
       Key: fileKey,
     }
 
